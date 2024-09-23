@@ -4,17 +4,30 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0e0e2038-358d-4dfa-b08e-e9b0393fb7a3" name="Changes" comment="Entities added">
+    <list default="true" id="0e0e2038-358d-4dfa-b08e-e9b0393fb7a3" name="Changes" comment="Fixtures added">
       <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config/bundles.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/bundles.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config/packages/security.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/security.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations/Version20240922221211.php" beforeDir="false" afterPath="$PROJECT_DIR$/migrations/Version20240922221211.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/routes.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/routes.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/SecurityController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Booking.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Booking.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/BookingSeat.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/BookingSeat.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Category.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Category.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Cinema.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Cinema.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Hall.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Hall.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Incident.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Incident.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Movie.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Movie.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Rating.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Rating.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Seat.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Seat.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Session.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Session.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Security/LoginFormAuthenticator.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/symfony.lock" beforeDir="false" afterPath="$PROJECT_DIR$/symfony.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/security/login.html.twig" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,12 +56,20 @@
               <option name="branches">
                 <list>
                   <RecentBranch>
-                    <option name="branchName" value="crud" />
-                    <option name="lastUsedInstant" value="1727043308" />
+                    <option name="branchName" value="api" />
+                    <option name="lastUsedInstant" value="1727097013" />
                   </RecentBranch>
                   <RecentBranch>
                     <option name="branchName" value="master" />
-                    <option name="lastUsedInstant" value="1727043287" />
+                    <option name="lastUsedInstant" value="1727096999" />
+                  </RecentBranch>
+                  <RecentBranch>
+                    <option name="branchName" value="fixtures" />
+                    <option name="lastUsedInstant" value="1727093172" />
+                  </RecentBranch>
+                  <RecentBranch>
+                    <option name="branchName" value="crud" />
+                    <option name="lastUsedInstant" value="1727050983" />
                   </RecentBranch>
                   <RecentBranch>
                     <option name="branchName" value="entities" />
@@ -202,6 +223,12 @@
       <path value="$PROJECT_DIR$/vendor/psr/link" />
       <path value="$PROJECT_DIR$/vendor/symfonycasts/verify-email-bundle" />
       <path value="$PROJECT_DIR$/vendor/symfonycasts/reset-password-bundle" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/data-fixtures" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/doctrine-fixtures-bundle" />
+      <path value="$PROJECT_DIR$/vendor/fakerphp/faker" />
+      <path value="$PROJECT_DIR$/vendor/api-platform/core" />
+      <path value="$PROJECT_DIR$/vendor/willdurand/negotiation" />
+      <path value="$PROJECT_DIR$/vendor/nelmio/cors-bundle" />
     </include_path>
   </component>
   <component name="ProjectColorInfo">{
@@ -216,8 +243,8 @@
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;crud&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/saltman/Documents/TrainingProject/templates/movie&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;api&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/saltman/Documents/TestProjectbug&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -256,6 +283,8 @@
       <updated>1727040672358</updated>
       <workItem from="1727040673868" duration="476000" />
       <workItem from="1727041150941" duration="9161000" />
+      <workItem from="1727085400269" duration="15593000" />
+      <workItem from="1727107628085" duration="3239000" />
     </task>
     <task id="LOCAL-00001" summary="Entities added">
       <option name="closed" value="true" />
@@ -265,7 +294,23 @@
       <option name="project" value="LOCAL" />
       <updated>1727043253315</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Factories added">
+      <option name="closed" value="true" />
+      <created>1727096942055</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1727096942055</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Fixtures added">
+      <option name="closed" value="true" />
+      <created>1727096955557</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1727096955557</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -273,6 +318,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Entities added" />
-    <option name="LAST_COMMIT_MESSAGE" value="Entities added" />
+    <MESSAGE value="Factories added" />
+    <MESSAGE value="Fixtures added" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixtures added" />
   </component>
 </project>
