@@ -34,7 +34,7 @@ class Movie
     /**
      * @var Collection<int, Rating>
      */
-    #[ORM\OneToMany(targetEntity: Rating::class, mappedBy: 'movi', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: Rating::class, mappedBy: 'movie', orphanRemoval: true)]
     private Collection $ratings;
 
     /**
