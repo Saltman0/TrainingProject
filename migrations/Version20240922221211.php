@@ -26,7 +26,7 @@ final class Version20240922221211 extends AbstractMigration
         $this->addSql('CREATE TABLE cinema (id INT AUTO_INCREMENT NOT NULL, name VARCHAR(255) NOT NULL, adress VARCHAR(255) NOT NULL, phone_number VARCHAR(255) NOT NULL, open_hour TIME NOT NULL, close_hour TIME NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE hall (id INT AUTO_INCREMENT NOT NULL, cinema_id INT NOT NULL, number SMALLINT NOT NULL, projection_quality VARCHAR(255) NOT NULL, INDEX IDX_1B8FA83FB4CB84B6 (cinema_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE incident (id INT AUTO_INCREMENT NOT NULL, hall_id INT NOT NULL, type VARCHAR(255) NOT NULL, description VARCHAR(255) NOT NULL, INDEX IDX_3D03A11A52AFCFD6 (hall_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
-        $this->addSql('CREATE TABLE movie (id INT AUTO_INCREMENT NOT NULL, category_id INT NOT NULL, title VARCHAR(255) NOT NULL, description VARCHAR(255) NOT NULL, minimum_age INT NOT NULL, favorite TINYINT(1) NOT NULL, INDEX IDX_1D5EF26F12469DE2 (category_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE user (id INT AUTO_INCREMENT NOT NULL, category_id INT NOT NULL, title VARCHAR(255) NOT NULL, description VARCHAR(255) NOT NULL, minimum_age INT NOT NULL, favorite TINYINT(1) NOT NULL, INDEX IDX_1D5EF26F12469DE2 (category_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE rating (id INT AUTO_INCREMENT NOT NULL, movie_id INT NOT NULL, user_id INT NOT NULL, number INT NOT NULL, validated TINYINT(1) NOT NULL, INDEX IDX_D88926228F93B6FC (movie_id), INDEX IDX_D8892622A76ED395 (user_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE seat (id INT AUTO_INCREMENT NOT NULL, hall_id INT NOT NULL, row VARCHAR(255) NOT NULL, number INT NOT NULL, INDEX IDX_3D5C366652AFCFD6 (hall_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE session (id INT AUTO_INCREMENT NOT NULL, hall_id INT NOT NULL, movie_id INT NOT NULL, start_time DATETIME NOT NULL, end_time DATETIME NOT NULL, price INT NOT NULL, INDEX IDX_D044D5D452AFCFD6 (hall_id), INDEX IDX_D044D5D48F93B6FC (movie_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
@@ -38,12 +38,12 @@ final class Version20240922221211 extends AbstractMigration
         $this->addSql('ALTER TABLE booking_seat ADD CONSTRAINT FK_25CD1428C1DAFE35 FOREIGN KEY (seat_id) REFERENCES seat (id)');
         $this->addSql('ALTER TABLE hall ADD CONSTRAINT FK_1B8FA83FB4CB84B6 FOREIGN KEY (cinema_id) REFERENCES cinema (id)');
         $this->addSql('ALTER TABLE incident ADD CONSTRAINT FK_3D03A11A52AFCFD6 FOREIGN KEY (hall_id) REFERENCES hall (id)');
-        $this->addSql('ALTER TABLE movie ADD CONSTRAINT FK_1D5EF26F12469DE2 FOREIGN KEY (category_id) REFERENCES category (id)');
-        $this->addSql('ALTER TABLE rating ADD CONSTRAINT FK_D88926228F93B6FC FOREIGN KEY (movie_id) REFERENCES movie (id)');
+        $this->addSql('ALTER TABLE user ADD CONSTRAINT FK_1D5EF26F12469DE2 FOREIGN KEY (category_id) REFERENCES category (id)');
+        $this->addSql('ALTER TABLE rating ADD CONSTRAINT FK_D88926228F93B6FC FOREIGN KEY (movie_id) REFERENCES user (id)');
         $this->addSql('ALTER TABLE rating ADD CONSTRAINT FK_D8892622A76ED395 FOREIGN KEY (user_id) REFERENCES `user` (id)');
         $this->addSql('ALTER TABLE seat ADD CONSTRAINT FK_3D5C366652AFCFD6 FOREIGN KEY (hall_id) REFERENCES hall (id)');
         $this->addSql('ALTER TABLE session ADD CONSTRAINT FK_D044D5D452AFCFD6 FOREIGN KEY (hall_id) REFERENCES hall (id)');
-        $this->addSql('ALTER TABLE session ADD CONSTRAINT FK_D044D5D48F93B6FC FOREIGN KEY (movie_id) REFERENCES movie (id)');
+        $this->addSql('ALTER TABLE session ADD CONSTRAINT FK_D044D5D48F93B6FC FOREIGN KEY (movie_id) REFERENCES user (id)');
     }
 
     public function down(Schema $schema): void
@@ -55,7 +55,7 @@ final class Version20240922221211 extends AbstractMigration
         $this->addSql('ALTER TABLE booking_seat DROP FOREIGN KEY FK_25CD1428C1DAFE35');
         $this->addSql('ALTER TABLE hall DROP FOREIGN KEY FK_1B8FA83FB4CB84B6');
         $this->addSql('ALTER TABLE incident DROP FOREIGN KEY FK_3D03A11A52AFCFD6');
-        $this->addSql('ALTER TABLE movie DROP FOREIGN KEY FK_1D5EF26F12469DE2');
+        $this->addSql('ALTER TABLE user DROP FOREIGN KEY FK_1D5EF26F12469DE2');
         $this->addSql('ALTER TABLE rating DROP FOREIGN KEY FK_D88926228F93B6FC');
         $this->addSql('ALTER TABLE rating DROP FOREIGN KEY FK_D8892622A76ED395');
         $this->addSql('ALTER TABLE seat DROP FOREIGN KEY FK_3D5C366652AFCFD6');
@@ -67,7 +67,7 @@ final class Version20240922221211 extends AbstractMigration
         $this->addSql('DROP TABLE cinema');
         $this->addSql('DROP TABLE hall');
         $this->addSql('DROP TABLE incident');
-        $this->addSql('DROP TABLE movie');
+        $this->addSql('DROP TABLE user');
         $this->addSql('DROP TABLE rating');
         $this->addSql('DROP TABLE seat');
         $this->addSql('DROP TABLE session');
