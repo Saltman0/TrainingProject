@@ -17,3 +17,7 @@ framework:
         # Namespaced pools use the above "app" backend by default
         #pools:
             #my.dedicated.cache: null
+        pools:
+            redis_cache:
+                adapter: 'cache.adapter.redis'
+                provider: 'redis://127.0.0.1:6379'
