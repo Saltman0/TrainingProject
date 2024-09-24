@@ -31,7 +31,7 @@ class Session
     #[ORM\OneToMany(targetEntity: Booking::class, mappedBy: 'session', orphanRemoval: true)]
     private Collection $bookings;
 
-    #[ORM\ManyToOne(inversedBy: 'session')]
+    #[ORM\ManyToOne(inversedBy: 'sessions')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Hall $hall = null;
 
