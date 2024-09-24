@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Factory\UserFactory;
 use App\Form\UserType;
 use App\Repository\UserRepository;
+use App\Services\UserService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -21,10 +22,10 @@ use Symfony\Component\Serializer\SerializerInterface;
 class UserController extends AbstractController
 {
     #[Route('/index', name: 'app_user_index', methods: ['GET'])]
-    public function index(UserRepository $userRepository): Response
+    public function index(UserService $userService): Response
     {
         return $this->render('user/index.html.twig', [
-            'users' => $userRepository->findAll(),
+            'users' => $userService->getAllUsers(),
         ]);
     }
 
