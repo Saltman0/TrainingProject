@@ -37,7 +37,7 @@ class UserController extends AbstractController
     #[Route('/add', name: 'app_user_add', methods: ['GET', 'POST'])]
     public function add(Request $request, UserFactory $userFactory, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
     {
-        $user = $userFactory->createUser();
+        $user = $userFactory->create();
 
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);

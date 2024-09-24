@@ -21,7 +21,7 @@ class UserFixtures extends Fixture implements OrderedFixtureInterface
 
         $faker = Factory::create();
 
-        $user = $this->userFactory->createUser($faker->email(), $faker->password(), [$roles[$randomKey]], []);
+        $user = $this->userFactory->create($faker->email(), $faker->password(), [$roles[$randomKey]], []);
 
         $manager->persist($user);
         $manager->flush();

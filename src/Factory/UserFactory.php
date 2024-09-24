@@ -6,7 +6,7 @@ use App\Entity\User;
 
 class UserFactory
 {
-    public function createUser(string $email, string $password, array $roles, array $bookings): User
+    public function create(?string $email = null, ?string $password = null, array $roles = [], array $bookings = []): User
     {
         $user = new User();
 
