@@ -8,7 +8,7 @@ use Symfony\Component\Messenger\MessageBusInterface;
 /**
  * Service used for news
  */
-final readonly class NewsService
+class NewsService
 {
     public function __construct(private MessageBusInterface $messageBus) {}
 
