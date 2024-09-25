@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Services;
 
@@ -7,9 +7,10 @@ use App\Repository\UserRepository;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Cache\InvalidArgumentException;
 
-final readonly class UserService
+readonly class UserService
 {
-    public function __construct(private UserRepository $userRepository, private CacheItemPoolInterface $redisCache) {}
+    public function __construct(private UserRepository         $userRepository,
+                                private CacheItemPoolInterface $redisCache) {}
 
     /**
      * Return all users from Doctrine or Redis
