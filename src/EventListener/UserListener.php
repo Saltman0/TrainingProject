@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\EventListener;
 
@@ -9,10 +9,11 @@ use Doctrine\ORM\Events;
 
 #[AsEntityListener(event: Events::postPersist, method: Events::postPersist, entity: User::class)]
 #[AsEntityListener(event: Events::postRemove, method: Events::postRemove, entity: User::class)]
-final readonly class UserListener
+class UserListener
 {
     public const string USER_TYPE = "user";
-    public function __construct(private NewsService $newsService) {}
+
+    public function __construct(private readonly NewsService $newsService) {}
 
     public function postPersist(User $user): void
     {
