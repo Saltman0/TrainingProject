@@ -5,7 +5,7 @@ namespace App\Message;
 /**
  * Message used for creating news in the database
  */
-final class CreateNewsMessage
+class CreateNewsMessage
 {
     public function __construct(private string $type, private string $content) {}
 
