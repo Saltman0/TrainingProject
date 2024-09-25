@@ -7,21 +7,29 @@ use App\Factory\NewsFactory;
 use App\Message\CreateNewsMessage;
 use App\MessageHandler\CreateNewsMessageHandler;
 use Doctrine\ORM\EntityManagerInterface;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 
 /**
  * @covers CreateNewsMessageHandler
  */
-class CreateNewsMessageHandlerTest extends TestCase
+final class CreateNewsMessageHandlerTest extends TestCase
 {
+    private readonly MockObject $newsFactory;
+    private readonly MockObject $entityManagerMock;
+    private readonly MockObject $loggerMock;
+
+    public function setUp(): void
+    {
+        $this->newsFactory = $this->createMock(NewsFactory::class);
+        $this->entityManagerMock = $this->createMock(EntityManagerInterface::class);
+        $this->loggerMock = $this->createMock(LoggerInterface::class);
+    }
+
     public function testCreateNewsMessageIsHandledCorrectly(): void
     {
-        $newsFactoryMock = $this->createMock(NewsFactory::class);
-        $entityManagerMock = $this->createMock(EntityManagerInterface::class);
-        $loggerMock = $this->createMock(LoggerInterface::class);
-
-        $handler = new CreateNewsMessageHandler($newsFactoryMock, $entityManagerMock, $loggerMock);
+        $handler = new CreateNewsMessageHandler($this->newsFactory, $this->entityManagerMock, $this->loggerMock);
 
         $messageMock = $this->createMock(CreateNewsMessage::class);
         $newsMock = $this->createMock(News::class);
@@ -30,14 +38,13 @@ class CreateNewsMessageHandlerTest extends TestCase
         $messageMock->method('getType')->willReturn('Type');
         $messageMock->method('getContent')->willReturn('Content');
 
-        $newsFactoryMock->expects($this->once())->method('create')->with("Type", "Content")->willReturn($newsMock);
-        $entityManagerMock->expects($this->once())->method('persist')->with($newsMock);
-        $entityManagerMock->expects($this->once())->method('flush');
+        $this->newsFactory->expects($this->once())->method('create')->with("Type", "Content")->willReturn($newsMock);
+        $this->entityManagerMock->expects($this->once())->method('persist')->with($newsMock);
+        $this->entityManagerMock->expects($this->once())->method('flush');
         $newsMock->method('getId')->willReturn(123);
-        $loggerMock->expects($this->once())
+        $this->loggerMock->expects($this->once())
             ->method('info')
             ->with('Created news with id 123');
-        $loggerMock->expects($this->once())->method('info')->with();
 
         $handler->__invoke($messageMock);
     }
