@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace App\Tests\MessageHandler;
+namespace Unit\MessageHandler;
 
 use App\Entity\News;
 use App\Factory\NewsFactory;
