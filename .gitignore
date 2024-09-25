@@ -2,7 +2,6 @@
 ###> symfony/framework-bundle ###
 /.env.local
 /.env.*.local
-/config/secrets/prod/prod.decrypt.private.php
 /public/bundles/
 /var/
 /vendor/
@@ -18,6 +17,6 @@
 /assets/vendor/
 ###< symfony/asset-mapper ###
 
+/config/secrets/
 /.idea/
-
 .phpunit.cache/
