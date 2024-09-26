@@ -4,7 +4,6 @@ namespace App\Tests\Unit\Factory;
 
 use App\Entity\Booking;
 use App\Entity\Rating;
-use App\Entity\User;
 use App\Factory\UserFactory;
 use PHPUnit\Framework\TestCase;
 
