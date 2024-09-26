@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Factory\UserFactory;
 use App\Form\UserType;
-use App\Services\UserService;
+use App\Service\UserService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -17,7 +17,6 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Serializer\SerializerInterface;
 
 #[Route('/user')]
-#[IsGranted("ROLE_ADMIN")]
 class UserController extends AbstractController
 {
     #[Route('/index', name: 'app_user_index', methods: ['GET'])]
@@ -31,7 +30,7 @@ class UserController extends AbstractController
     #[Route('/show/{user}', name: 'app_user_show', methods: ['GET'])]
     public function show(User $user, SerializerInterface $serializer): Response
     {
-        return new JsonResponse($serializer->serialize($user, 'json'));
+        return new JsonResponse($serializer->serialize($user, 'json', ["groups" => ["api"]]), 200, [], true);
     }
 
     #[Route('/add', name: 'app_user_add', methods: ['GET', 'POST'])]
@@ -56,9 +55,7 @@ class UserController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-            $this->addFlash("success", "User added successfully !");
-
-            return $this->redirectToRoute("app_user_index");
+            return new JsonResponse($user->getId(), Response::HTTP_CREATED);
 
         }
 
@@ -86,9 +83,7 @@ class UserController extends AbstractController
 
             $entityManager->flush();
 
-            $this->addFlash("success", "User modified successfully !");
-
-            return $this->redirectToRoute("app_user_index");
+            return new JsonResponse($user->getId(), Response::HTTP_ACCEPTED);
 
         }
 
@@ -98,13 +93,13 @@ class UserController extends AbstractController
     }
 
     #[Route('/delete/{user}', name: 'app_user_delete', methods: ['GET'])]
-    public function delete(User $user, EntityManagerInterface $entityManager): Response
+    public function delete(User $user, EntityManagerInterface $entityManager): JsonResponse
     {
+        $userId = $user->getId();
+
         $entityManager->remove($user);
         $entityManager->flush();
 
-        $this->addFlash('success', 'User deleted successfully!');
-
-        return $this->redirectToRoute("app_user_index");
+        return new JsonResponse($userId);
     }
 }

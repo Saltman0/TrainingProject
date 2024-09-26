@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Entity;
 
@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: CinemaRepository::class)]
 #[ApiResource]
@@ -16,27 +17,33 @@ class Cinema
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups("api")]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups("api")]
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $adress = null;
+    #[Groups("api")]
+    private ?string $address = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups("api")]
     private ?string $phoneNumber = null;
 
     #[ORM\Column(type: Types::TIME_MUTABLE)]
+    #[Groups("api")]
     private ?\DateTimeInterface $openHour = null;
 
     #[ORM\Column(type: Types::TIME_MUTABLE)]
+    #[Groups("api")]
     private ?\DateTimeInterface $closeHour = null;
 
     /**
      * @var Collection<int, Hall>
      */
-    #[ORM\OneToMany(targetEntity: Hall::class, mappedBy: 'cinema', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: Hall::class, mappedBy: 'cinema')]
     private Collection $hall;
 
     public function __construct()
@@ -61,14 +68,14 @@ class Cinema
         return $this;
     }
 
-    public function getAdress(): ?string
+    public function getAddress(): ?string
     {
-        return $this->adress;
+        return $this->address;
     }
 
-    public function setAdress(string $adress): static
+    public function setAddress(string $address): static
     {
-        $this->adress = $adress;
+        $this->address = $address;
 
         return $this;
     }

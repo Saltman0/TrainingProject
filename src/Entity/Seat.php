@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Entity;
 
@@ -7,6 +7,7 @@ use App\Repository\SeatRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: SeatRepository::class)]
 #[ApiResource]
@@ -15,22 +16,26 @@ class Seat
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups("api")]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups("api")]
     private ?string $row = null;
 
     #[ORM\Column]
+    #[Groups("api")]
     private ?int $number = null;
 
     #[ORM\ManyToOne(inversedBy: 'seat')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups("api")]
     private ?Hall $hall = null;
 
     /**
      * @var Collection<int, BookingSeat>
      */
-    #[ORM\OneToMany(targetEntity: BookingSeat::class, mappedBy: 'seat', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: BookingSeat::class, mappedBy: 'seat')]
     private Collection $bookingSeats;
 
     public function __construct()

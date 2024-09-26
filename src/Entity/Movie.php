@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Entity;
 
@@ -7,6 +7,7 @@ use App\Repository\MovieRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: MovieRepository::class)]
 #[ApiResource]
@@ -15,22 +16,28 @@ class Movie
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups("api")]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups("api")]
     private ?string $title = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups("api")]
     private ?string $description = null;
 
     #[ORM\Column]
+    #[Groups("api")]
     private ?int $minimumAge = null;
 
     #[ORM\Column]
+    #[Groups("api")]
     private ?bool $favorite = null;
 
     #[ORM\ManyToOne(inversedBy: 'movies')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: false, onDelete: "CASCADE")]
+    #[Groups("api")]
     private ?Category $category = null;
 
     /**

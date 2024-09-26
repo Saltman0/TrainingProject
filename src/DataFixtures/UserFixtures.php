@@ -2,7 +2,7 @@
 
 namespace App\DataFixtures;
 
-use App\Factory\UserFactory;
+use App\Service\UserService;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -12,7 +12,7 @@ class UserFixtures extends Fixture implements OrderedFixtureInterface
 {
     public const string USER_REFERENCE = 'user';
 
-    public function __construct(private readonly UserFactory $userFactory) {}
+    public function __construct(private readonly UserService $userService) {}
 
     public function load(ObjectManager $manager): void
     {
@@ -21,7 +21,7 @@ class UserFixtures extends Fixture implements OrderedFixtureInterface
 
         $faker = Factory::create();
 
-        $user = $this->userFactory->create($faker->email(), $faker->password(), [$roles[$randomKey]], []);
+        $user = $this->userService->createUser($faker->email(), $faker->password(), [$roles[$randomKey]], [], []);
 
         $manager->persist($user);
         $manager->flush();

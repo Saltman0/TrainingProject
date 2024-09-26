@@ -33,6 +33,18 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->getEntityManager()->flush();
     }
 
+    /**
+     * @return User|null
+     */
+    public function findLastUser(): ?User
+    {
+        return $this->createQueryBuilder('u')
+            ->orderBy('u.id', 'DESC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
     //    /**
     //     * @return User[] Returns an array of User objects
     //     */
