@@ -9,7 +9,9 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Component\Serializer\Attribute\Ignore;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
@@ -23,18 +25,35 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 180)]
+    #[Groups(["api", "user"])]
+    #[Assert\NotBlank(message: 'Email cannot be blank.')]
+    #[Assert\Email(message: 'This email is not valid.')]
     private ?string $email = null;
 
     /**
      * @var list<string> The user roles
      */
     #[ORM\Column]
+    #[Groups(["api", "user"])]
+    #[Assert\NotBlank(message: "User must have at least one role.")]
+    #[Assert\Type("array")]
     private array $roles = [];
 
     /**
      * @var string The hashed password
      */
     #[ORM\Column]
+    #[Assert\NotBlank(message: "Password cannot be blank.")]
+    #[Assert\Length(
+        min: 8,
+        max: 50,
+        minMessage: 'Your password must be at least 8 characters long.',
+        maxMessage: 'Your password must be less than 50 characters long.'
+    )]
+    #[Assert\Regex(
+        pattern: '/(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])/',
+        message: 'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character.'
+    )]
     #[Ignore]
     private ?string $password = null;
 
