@@ -6,6 +6,7 @@ use ApiPlatform\Metadata\ApiResource;
 use App\Repository\RatingRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: RatingRepository::class)]
 #[ApiResource]
@@ -18,20 +19,25 @@ class Rating
     private ?int $id = null;
 
     #[ORM\Column]
+    #[Assert\Positive(message: "Number must be greater than or equal to 0.")]
+    #[Assert\NotNull(message: "Rating number can't be null.")]
     #[Groups("api")]
     private ?int $number = null;
 
     #[ORM\Column]
+    #[Assert\NotNull(message: "Validated value must be either true or false.")]
     #[Groups("api")]
     private ?bool $validated = null;
 
     #[ORM\ManyToOne(inversedBy: 'ratings')]
     #[ORM\JoinColumn(nullable: false, onDelete: "CASCADE")]
+    #[Assert\NotNull(message: "Rating must be linked to a movie.")]
     #[Groups("api")]
     private ?Movie $movie = null;
 
     #[ORM\ManyToOne(inversedBy: 'ratings')]
     #[ORM\JoinColumn(nullable: false, onDelete: "CASCADE")]
+    #[Assert\NotNull(message: "Rating must be linked to a user.")]
     #[Groups("api")]
     private ?User $user = null;
 

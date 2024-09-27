@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: MovieRepository::class)]
 #[ApiResource]
@@ -20,23 +21,29 @@ class Movie
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotNull(message: "Movie must have a title.")]
     #[Groups("api")]
     private ?string $title = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotNull(message: "Movie must have a description.")]
     #[Groups("api")]
     private ?string $description = null;
 
     #[ORM\Column]
+    #[Assert\PositiveOrZero(message: "Minimum age must be equal or greater than zero.")]
+    #[Assert\NotNull(message: "Movie must have a minimum age.")]
     #[Groups("api")]
     private ?int $minimumAge = null;
 
     #[ORM\Column]
+    #[Assert\NotNull(message: "Favorite must be true or false.")]
     #[Groups("api")]
     private ?bool $favorite = null;
 
     #[ORM\ManyToOne(inversedBy: 'movies')]
     #[ORM\JoinColumn(nullable: false, onDelete: "CASCADE")]
+    #[Assert\NotNull(message: "Movie must have a category.")]
     #[Groups("api")]
     private ?Category $category = null;
 

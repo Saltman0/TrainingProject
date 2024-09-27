@@ -6,6 +6,7 @@ use ApiPlatform\Metadata\ApiResource;
 use App\Repository\BookingSeatRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: BookingSeatRepository::class)]
 #[ApiResource]
@@ -19,11 +20,13 @@ class BookingSeat
 
     #[ORM\ManyToOne(inversedBy: 'bookingSeats')]
     #[ORM\JoinColumn(nullable: false, onDelete: "CASCADE")]
+    #[Assert\NotNull(message: "Booking seat must have a booking.")]
     #[Groups("api")]
     private ?Booking $booking = null;
 
     #[ORM\ManyToOne(inversedBy: 'bookingSeats')]
     #[ORM\JoinColumn(nullable: false, onDelete: "CASCADE")]
+    #[Assert\NotNull(message: "Booking seat must have a seat.")]
     #[Groups("api")]
     private ?Seat $seat = null;
 

@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: SessionRepository::class)]
 #[ApiResource]
@@ -21,14 +22,22 @@ class Session
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Assert\NotNull(message: "Session must have a start time.")]
+    #[Assert\DateTime(message: "Start time must be a dateTime.")]
+    #[Assert\GreaterThanOrEqual("today", message: "Start time must be in the future.")]
     #[Groups("api")]
     private ?\DateTimeInterface $startTime = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Assert\NotNull(message: "Session must have a end time.")]
+    #[Assert\DateTime(message: "End time must be a dateTime.")]
+    #[Assert\GreaterThan(propertyPath: "startTime", message: "End time must be greater than start time.")]
     #[Groups("api")]
     private ?\DateTimeInterface $endTime = null;
 
     #[ORM\Column]
+    #[Assert\NotNull(message: "Session must have a price.")]
+    #[Assert\PositiveOrZero(message: "Price must be equal or greater than 0.")]
     #[Groups("api")]
     private ?int $price = null;
 
@@ -40,11 +49,13 @@ class Session
 
     #[ORM\ManyToOne(inversedBy: 'sessions')]
     #[ORM\JoinColumn(nullable: false, onDelete: "CASCADE")]
+    #[Assert\NotNull(message: "Session must have a hall.")]
     #[Groups("api")]
     private ?Hall $hall = null;
 
     #[ORM\ManyToOne(inversedBy: 'sessions')]
     #[ORM\JoinColumn(nullable: false, onDelete: "CASCADE")]
+    #[Assert\NotNull(message: "Session must have a movie.")]
     #[Groups("api")]
     private ?Movie $movie = null;
 

@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: HallRepository::class)]
 #[ApiResource]
@@ -21,10 +22,12 @@ class Hall
     private ?int $id = null;
 
     #[ORM\Column(type: Types::SMALLINT)]
+    #[Assert\Positive(message: "Hall number must be greater than 0.")]
     #[Groups("api")]
     private ?int $number = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotNull(message: "Hall must have a projection quality.")]
     #[Groups("api")]
     private ?string $projectionQuality = null;
 
@@ -42,6 +45,7 @@ class Hall
 
     #[ORM\ManyToOne(inversedBy: 'hall')]
     #[ORM\JoinColumn(nullable: false, onDelete: "CASCADE")]
+    #[Assert\NotNull(message: "Hall must have a cinema.")]
     #[Groups("api")]
     private ?Cinema $cinema = null;
 

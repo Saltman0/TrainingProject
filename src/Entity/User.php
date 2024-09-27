@@ -27,7 +27,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 180)]
     #[Groups(["api", "user"])]
-    #[Assert\NotBlank(message: 'Email cannot be blank.')]
+    #[Assert\NotNull(message: 'User must have an email.')]
     #[Assert\Email(message: 'This email is not valid.')]
     private ?string $email = null;
 
@@ -36,15 +36,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\Column]
     #[Groups(["api", "user"])]
-    #[Assert\NotBlank(message: "User must have at least one role.")]
     #[Assert\Type("array")]
+    #[Assert\Count(min: 1 , minMessage: "User must have at least one role.")]
     private array $roles = [];
 
     /**
      * @var string The hashed password
      */
     #[ORM\Column]
-    #[Assert\NotBlank(message: "Password cannot be blank.")]
+    #[Assert\NotNull(message: "User must have a password.")]
     #[Assert\Length(
         min: 8,
         max: 50,

@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: BookingRepository::class)]
 #[ApiResource]
@@ -21,11 +22,13 @@ class Booking
 
     #[ORM\ManyToOne(inversedBy: 'bookings')]
     #[ORM\JoinColumn(nullable: false, onDelete: "CASCADE")]
+    #[Assert\NotNull(message: "Booking must have a user.")]
     #[Groups("api")]
     private ?User $user = null;
 
     #[ORM\ManyToOne(inversedBy: 'bookings')]
     #[ORM\JoinColumn(nullable: false, onDelete: "CASCADE")]
+    #[Assert\NotNull(message: "Booking must have a session.")]
     #[Groups("api")]
     private ?Session $session = null;
 
@@ -33,6 +36,7 @@ class Booking
      * @var Collection<int, BookingSeat>
      */
     #[ORM\OneToMany(targetEntity: BookingSeat::class, mappedBy: 'booking')]
+    #[Assert\Count(min: 1 , minMessage: "Booking must have at least one booking seat.")]
     private Collection $bookingSeats;
 
     public function __construct()

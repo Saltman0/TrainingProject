@@ -6,6 +6,7 @@ use ApiPlatform\Metadata\ApiResource;
 use App\Repository\IncidentRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: IncidentRepository::class)]
 #[ApiResource]
@@ -18,15 +19,18 @@ class Incident
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotNull(message: "Incident must have a type.")]
     #[Groups("api")]
     private ?string $type = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotNull(message: "Incident must have a description.")]
     #[Groups("api")]
     private ?string $description = null;
 
     #[ORM\ManyToOne(inversedBy: 'incidents')]
     #[ORM\JoinColumn(nullable: false, onDelete: "CASCADE")]
+    #[Assert\NotNull(message: "Incident must have a hall.")]
     #[Groups("api")]
     private ?Hall $hall = null;
 

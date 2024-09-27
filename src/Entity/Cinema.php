@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CinemaRepository::class)]
 #[ApiResource]
@@ -21,22 +22,33 @@ class Cinema
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotNull(message: "Cinema must have a name.")]
     #[Groups("api")]
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotNull(message: "Cinema must have an address.")]
     #[Groups("api")]
     private ?string $address = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Regex(
+        pattern: "/^\+?[0-9\s\-\(\)]+$/",
+        message: "This is not a correct phone number."
+    )]
+    #[Assert\NotNull(message: "Cinema must have a phone number.")]
     #[Groups("api")]
     private ?string $phoneNumber = null;
 
     #[ORM\Column(type: Types::TIME_MUTABLE)]
+    #[Assert\Time(message: "Open hour must be a time.")]
+    #[Assert\NotNull(message: "Cinema must have a open hour.")]
     #[Groups("api")]
     private ?\DateTimeInterface $openHour = null;
 
     #[ORM\Column(type: Types::TIME_MUTABLE)]
+    #[Assert\Time(message: "Close hour must be a time.")]
+    #[Assert\NotNull(message: "Cinema must have a close hour.")]
     #[Groups("api")]
     private ?\DateTimeInterface $closeHour = null;
 

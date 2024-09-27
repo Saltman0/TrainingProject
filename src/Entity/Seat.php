@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: SeatRepository::class)]
 #[ApiResource]
@@ -20,15 +21,20 @@ class Seat
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Regex(pattern: "/(?=.*[A-Z])/" ,message: "Seat row must be a uppercase letter.")]
+    #[Assert\NotNull(message: "Seat must have a row.")]
     #[Groups("api")]
     private ?string $row = null;
 
     #[ORM\Column]
+    #[Assert\Positive(message: "Seat number must be greater than 0.")]
+    #[Assert\NotNull(message: "Seat must have a number.")]
     #[Groups("api")]
     private ?int $number = null;
 
     #[ORM\ManyToOne(inversedBy: 'seat')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotNull(message: "Seat must have a hall.")]
     #[Groups("api")]
     private ?Hall $hall = null;
 

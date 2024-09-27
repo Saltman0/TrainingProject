@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\NewsRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: NewsRepository::class)]
 class News
@@ -16,10 +17,12 @@ class News
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotNull(message: "News must have a type.")]
     #[Groups("api")]
     private ?string $type = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotNull(message: "News must have a description.")]
     #[Groups("api")]
     private ?string $description = null;
 
