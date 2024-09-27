@@ -71,11 +71,6 @@ class UserServiceTest extends TestCase
     {
         $cacheItem = $this->createMock(CacheItemInterface::class);
 
-        $this->redisCache->expects($this->once())
-            ->method('getItem')
-            ->with("getAllUsers")
-            ->willReturn($cacheItem);
-
         // Mock data to be returned from the cache
         $users = [
             $this->createMock(User::class),

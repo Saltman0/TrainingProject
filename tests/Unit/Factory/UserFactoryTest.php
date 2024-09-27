@@ -7,6 +7,9 @@ use App\Entity\Rating;
 use App\Factory\UserFactory;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @covers UserFactory
+ */
 class UserFactoryTest extends TestCase
 {
     private readonly UserFactory $userFactory;
