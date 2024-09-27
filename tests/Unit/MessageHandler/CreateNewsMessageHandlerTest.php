@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace App\Tests\MessageHandler;
+namespace App\Tests\Unit\MessageHandler;
 
 use App\Entity\News;
 use App\Factory\NewsFactory;
@@ -16,20 +16,20 @@ use Psr\Log\LoggerInterface;
  */
 final class CreateNewsMessageHandlerTest extends TestCase
 {
-    private readonly MockObject $newsFactory;
-    private readonly MockObject $entityManagerMock;
-    private readonly MockObject $loggerMock;
+    private readonly NewsFactory $newsFactory;
+    private readonly EntityManagerInterface $entityManager;
+    private readonly LoggerInterface $logger;
 
     public function setUp(): void
     {
         $this->newsFactory = $this->createMock(NewsFactory::class);
-        $this->entityManagerMock = $this->createMock(EntityManagerInterface::class);
-        $this->loggerMock = $this->createMock(LoggerInterface::class);
+        $this->entityManager = $this->createMock(EntityManagerInterface::class);
+        $this->logger = $this->createMock(LoggerInterface::class);
     }
 
     public function testCreateNewsMessageIsHandledCorrectly(): void
     {
-        $handler = new CreateNewsMessageHandler($this->newsFactory, $this->entityManagerMock, $this->loggerMock);
+        $handler = new CreateNewsMessageHandler($this->newsFactory, $this->entityManager, $this->logger);
 
         $messageMock = $this->createMock(CreateNewsMessage::class);
         $newsMock = $this->createMock(News::class);
@@ -39,10 +39,10 @@ final class CreateNewsMessageHandlerTest extends TestCase
         $messageMock->method('getContent')->willReturn('Content');
 
         $this->newsFactory->expects($this->once())->method('create')->with("Type", "Content")->willReturn($newsMock);
-        $this->entityManagerMock->expects($this->once())->method('persist')->with($newsMock);
-        $this->entityManagerMock->expects($this->once())->method('flush');
+        $this->entityManager->expects($this->once())->method('persist')->with($newsMock);
+        $this->entityManager->expects($this->once())->method('flush');
         $newsMock->method('getId')->willReturn(123);
-        $this->loggerMock->expects($this->once())
+        $this->logger->expects($this->once())
             ->method('info')
             ->with('Created news with id 123');
 

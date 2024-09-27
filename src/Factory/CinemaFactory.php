@@ -21,7 +21,7 @@ class CinemaFactory
     {
         $cinema = new Cinema();
         $cinema->setName($name);
-        $cinema->setAdress($adress);
+        $cinema->setAddress($adress);
         $cinema->setPhoneNumber($phoneNumber);
         $cinema->setOpenHour($openHour);
         $cinema->setCloseHour($closeHour);

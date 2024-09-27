@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace App\Tests\EventListener;
+namespace App\Tests\Unit\EventListener;
 
 use App\Entity\User;
 use App\EventListener\UserListener;
-use App\Services\NewsService;
+use App\Service\NewsService;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
@@ -13,12 +13,13 @@ use PHPUnit\Framework\TestCase;
  */
 final class UserListenerTest extends TestCase
 {
-    private readonly MockObject $newsServiceMock;
+    private readonly NewsService $newsService;
     private readonly UserListener $userListener;
+
     public function setUp(): void
     {
-        $this->newsServiceMock = $this->createMock(NewsService::class);
-        $this->userListener = new UserListener($this->newsServiceMock);
+        $this->newsService = $this->createMock(NewsService::class);
+        $this->userListener = new UserListener($this->newsService);
     }
 
     public function testPostPersist(): void
@@ -26,7 +27,7 @@ final class UserListenerTest extends TestCase
         $userMock = $this->createMock(User::class);
         $userMock->method('getEmail')->willReturn("example@gmail.com");
 
-        $this->newsServiceMock->expects($this->once())
+        $this->newsService->expects($this->once())
             ->method("createNews")
             ->with(UserListener::USER_TYPE, "L'utilisateur example@gmail.com a été ajouté !");
 
@@ -38,7 +39,7 @@ final class UserListenerTest extends TestCase
         $userMock = $this->createMock(User::class);
         $userMock->method('getEmail')->willReturn("example@gmail.com");
 
-        $this->newsServiceMock->expects($this->once())
+        $this->newsService->expects($this->once())
             ->method("createNews")
             ->with(
                 $this->equalTo(UserListener::USER_TYPE),
